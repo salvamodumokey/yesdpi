@@ -12,11 +12,11 @@ export const siteConfig = {
   promise: "Check, convert, and prepare images for print — privately in your browser.",
 
   /**
-   * PLACEHOLDER — no production domain has been registered yet.
-   * Replace with the real domain (e.g. "https://yesdpi.com") before launch.
-   * All canonical URLs, sitemap entries, and OG metadata derive from this.
+   * Live on Vercel's free subdomain. Swap for a custom domain (e.g.
+   * "https://yesdpi.com") once one is registered — update here only, it
+   * drives all canonical URLs, sitemap entries, and OG metadata.
    */
-  baseUrl: "https://example-placeholder.yesdpi.com",
+  baseUrl: "https://yesdpi.vercel.app",
 
   /**
    * PLACEHOLDER — replace with a real monitored inbox before launch.
