@@ -1,0 +1,92 @@
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-12);
+  text-align: center;
+  padding: var(--space-40) var(--space-24);
+  border: 1.5px dashed var(--border-default);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface);
+  transition: border-color var(--motion-fast) var(--ease-standard), background var(--motion-fast) var(--ease-standard);
+}
+
+.dropzone.compact {
+  padding: var(--space-24) var(--space-20);
+  gap: var(--space-8);
+}
+
+.dropzone.dragOver {
+  border-color: var(--accent);
+  background: var(--accent-subtle);
+}
+
+.iconWrap {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+}
+
+.compact .iconWrap {
+  width: 36px;
+  height: 36px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.hint {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+.button {
+  margin-top: var(--space-8);
+  height: 44px;
+  padding: 0 var(--space-24);
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--accent);
+  color: var(--text-on-accent);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--motion-fast) var(--ease-standard), outline-color var(--motion-fast) var(--ease-standard);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.button:hover {
+  background: var(--accent-hover);
+}
+
+.button:active {
+  background: var(--accent-pressed);
+}
+
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* The real interactive element is the visually-hidden file input; its
+   focus ring is drawn on the visible label button instead. */
+.input:focus-visible ~ .button {
+  outline-color: var(--border-focus);
+}
