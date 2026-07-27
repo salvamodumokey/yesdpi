@@ -6,17 +6,18 @@
  * values here — replace them when the corresponding account/domain exists.
  */
 
+/**
+ * The single source of truth for the site's absolute URL. Reads
+ * NEXT_PUBLIC_SITE_URL if the hosting environment sets it (e.g. a Vercel
+ * project env var), otherwise falls back to the current live deployment.
+ * Swap for a custom domain by setting the env var — no code change needed.
+ */
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://yesdpi.vercel.app";
+
 export const siteConfig = {
   name: "YesDPI",
   tagline: "Free DPI & print image tools.",
   promise: "Check, convert, and prepare images for print — privately in your browser.",
-
-  /**
-   * Live on Vercel's free subdomain. Swap for a custom domain (e.g.
-   * "https://yesdpi.com") once one is registered — update here only, it
-   * drives all canonical URLs, sitemap entries, and OG metadata.
-   */
-  baseUrl: "https://yesdpi.vercel.app",
 
   /**
    * PLACEHOLDER — replace with a real monitored inbox before launch.

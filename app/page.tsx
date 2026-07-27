@@ -9,7 +9,7 @@ import { CheckIcon } from "@/components/icons";
 import { CATEGORY_LABEL, tools, popularToolSlugs } from "@/lib/tools-registry";
 import { guides } from "@/lib/guides-registry";
 import { buildMetadata } from "@/lib/seo/tool-metadata";
-import { faqSchema } from "@/lib/seo/structured-data";
+import { faqSchema, websiteSchema } from "@/lib/seo/structured-data";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = buildMetadata({
@@ -71,11 +71,13 @@ export default function Home() {
     items: tools.filter((t) => t.category === category && !popularToolSlugs.includes(t.slug)),
   }));
 
-  const jsonLd = faqSchema(FAQ);
+  const jsonLd = [websiteSchema(), faqSchema(FAQ)];
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {jsonLd.map((schema, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      ))}
 
       <section className={styles.hero}>
         <div className={styles.heroInner}>
@@ -179,9 +181,10 @@ export default function Home() {
         <section className={styles.learn} aria-label="About DPI">
           <h2>DPI vs. PPI, and why it doesn&apos;t create detail</h2>
           <p>
-            DPI (dots per inch) is a metadata value that tells a printer how densely to place an image&apos;s pixels
-            on paper — it is not a measure of quality by itself. PPI (pixels per inch) describes the same idea for
-            the image&apos;s own pixel grid; in practice the two terms are used almost interchangeably.
+            Image files may store a resolution value commonly labeled DPI (dots per inch). Software uses this value
+            to work out the intended print size — it is not a measure of quality by itself. PPI (pixels per inch),
+            strictly speaking, describes the image&apos;s own pixel density rather than a printer&apos;s output; in
+            practice the two terms are used almost interchangeably.
           </p>
           <p>
             <code>Changing DPI updates print metadata. It does not create new pixels.</code> A 3000×2400px photo

@@ -4,7 +4,7 @@ import ContentPage from "@/components/ContentPage";
 import RelatedTools from "@/components/RelatedTools";
 import { getTool } from "@/lib/tools-registry";
 import { buildMetadata } from "@/lib/seo/tool-metadata";
-import { articleSchema } from "@/lib/seo/structured-data";
+import { articleSchema, breadcrumbListSchema } from "@/lib/seo/structured-data";
 import contentStyles from "@/components/ContentPage.module.css";
 import tableStyles from "./table.module.css";
 
@@ -29,11 +29,19 @@ const REFERENCE = [
 ];
 
 export default function BestDpiGuide() {
-  const jsonLd = articleSchema({ path: PATH, headline: TITLE, description: DESCRIPTION });
+  const jsonLd = [
+    articleSchema({ path: PATH, headline: TITLE, description: DESCRIPTION }),
+    breadcrumbListSchema([
+      { name: "Guides", path: "/guides" },
+      { name: "Best DPI for Print", path: PATH },
+    ]),
+  ];
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {jsonLd.map((schema, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      ))}
       <ContentPage
         h1={TITLE}
         breadcrumb={

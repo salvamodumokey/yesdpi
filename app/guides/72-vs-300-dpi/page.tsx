@@ -4,7 +4,7 @@ import ContentPage from "@/components/ContentPage";
 import RelatedTools from "@/components/RelatedTools";
 import { getTool } from "@/lib/tools-registry";
 import { buildMetadata } from "@/lib/seo/tool-metadata";
-import { articleSchema } from "@/lib/seo/structured-data";
+import { articleSchema, breadcrumbListSchema } from "@/lib/seo/structured-data";
 import contentStyles from "@/components/ContentPage.module.css";
 
 const PATH = "/guides/72-vs-300-dpi";
@@ -18,11 +18,19 @@ const relatedTools = ["convert-image-to-300-dpi", "dpi-converter", "dpi-checker"
   .filter((t): t is NonNullable<typeof t> => Boolean(t));
 
 export default function DpiComparisonGuide() {
-  const jsonLd = articleSchema({ path: PATH, headline: TITLE, description: DESCRIPTION });
+  const jsonLd = [
+    articleSchema({ path: PATH, headline: TITLE, description: DESCRIPTION }),
+    breadcrumbListSchema([
+      { name: "Guides", path: "/guides" },
+      { name: "72 DPI vs. 300 DPI", path: PATH },
+    ]),
+  ];
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {jsonLd.map((schema, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      ))}
       <ContentPage
         h1={TITLE}
         breadcrumb={

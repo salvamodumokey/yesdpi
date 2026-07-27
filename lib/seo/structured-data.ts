@@ -1,4 +1,33 @@
-import { siteConfig } from "@/lib/config";
+import { SITE_URL, siteConfig } from "@/lib/config";
+
+export function websiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteConfig.name,
+    description: siteConfig.promise,
+    url: SITE_URL,
+  };
+}
+
+export interface BreadcrumbItem {
+  name: string;
+  path: string;
+}
+
+/** Matches the visible breadcrumb trail exactly — no hidden/extra entries. */
+export function breadcrumbListSchema(items: BreadcrumbItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: `${SITE_URL}${item.path}`,
+    })),
+  };
+}
 
 interface SoftwareAppSchemaInput {
   path: string;
@@ -12,7 +41,7 @@ export function softwareApplicationSchema({ path, name, description }: SoftwareA
     "@type": "WebApplication",
     name,
     description,
-    url: `${siteConfig.baseUrl}${path}`,
+    url: `${SITE_URL}${path}`,
     applicationCategory: "Utility",
     operatingSystem: "Any (runs in browser)",
     offers: {
@@ -35,7 +64,7 @@ export function articleSchema({ path, headline, description }: ArticleSchemaInpu
     "@type": "Article",
     headline,
     description,
-    url: `${siteConfig.baseUrl}${path}`,
+    url: `${SITE_URL}${path}`,
     publisher: {
       "@type": "Organization",
       name: siteConfig.name,

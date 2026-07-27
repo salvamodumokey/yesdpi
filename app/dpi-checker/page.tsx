@@ -28,7 +28,7 @@ const FAQ = [
   {
     question: "What's the difference between DPI and pixel dimensions?",
     answer:
-      "Pixel dimensions are the actual grid of pixels in the image. DPI is a metadata value that tells a printer how densely to place those pixels on paper. Changing DPI does not add or remove pixels.",
+      "Pixel dimensions are the actual grid of pixels an image contains. Image files may also store a resolution value commonly labeled DPI, which software uses to work out the intended print size — while the pixel dimensions are what determine how much detail is actually available. Changing the DPI value does not add or remove pixels.",
   },
 ];
 

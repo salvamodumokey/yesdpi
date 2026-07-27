@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { PendingFileProvider } from "@/components/PendingFileContext";
-import { siteConfig } from "@/lib/config";
+import { SITE_URL, siteConfig } from "@/lib/config";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -14,7 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.baseUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: `${siteConfig.name} — ${siteConfig.tagline}`,
     template: `%s`,
@@ -22,11 +22,23 @@ export const metadata: Metadata = {
   description: siteConfig.promise,
   icons: {
     icon: [
-      { url: "/favicon-light.png", media: "(prefers-color-scheme: light)" },
-      { url: "/favicon-dark.png", media: "(prefers-color-scheme: dark)" },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-light.png", type: "image/png", sizes: "64x64", media: "(prefers-color-scheme: light)" },
+      { url: "/favicon-dark.png", type: "image/png", sizes: "64x64", media: "(prefers-color-scheme: dark)" },
     ],
     apple: "/apple-icon.png",
   },
+  openGraph: {
+    siteName: siteConfig.name,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1473E6",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

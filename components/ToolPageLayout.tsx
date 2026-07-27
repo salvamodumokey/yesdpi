@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { relatedTools } from "@/lib/tools-registry";
-import { faqSchema, softwareApplicationSchema, type FaqItem } from "@/lib/seo/structured-data";
+import { breadcrumbListSchema, faqSchema, softwareApplicationSchema, type FaqItem } from "@/lib/seo/structured-data";
 import AdSlot from "./AdSlot";
 import FaqSection from "./FaqSection";
 import RelatedTools from "./RelatedTools";
@@ -34,6 +34,10 @@ export default function ToolPageLayout({
 }: ToolPageLayoutProps) {
   const jsonLd = [
     softwareApplicationSchema({ path: `/${slug}`, name: h1, description }),
+    breadcrumbListSchema([
+      { name: "All Tools", path: "/" },
+      { name: breadcrumbLabel, path: `/${slug}` },
+    ]),
     faqSchema(faq),
   ];
 

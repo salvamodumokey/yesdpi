@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Wordmark from "./Wordmark";
 import styles from "./SiteHeader.module.css";
 
@@ -16,12 +16,28 @@ const NAV_LINKS = [
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  const closeMenu = () => setOpen(false);
+
+  // Escape closes the mobile menu and returns focus to the toggle button.
+  useEffect(() => {
+    if (!open) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
 
   return (
     <header className={styles.header}>
       <div className={styles.inner}>
         <Link href="/" className={styles.wordmarkLink}>
-          <Wordmark height={26} priority />
+          <Wordmark height={28} priority />
         </Link>
 
         <nav className={styles.nav} aria-label="Primary">
@@ -37,6 +53,7 @@ export default function SiteHeader() {
             No upload
           </Link>
           <button
+            ref={menuButtonRef}
             type="button"
             className={styles.menuButton}
             aria-expanded={open}
@@ -60,11 +77,11 @@ export default function SiteHeader() {
       {open && (
         <div id="mobile-nav" className={styles.mobilePanel}>
           {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>
+            <Link key={link.href} href={link.href} onClick={closeMenu}>
               {link.label}
             </Link>
           ))}
-          <Link href="/privacy" onClick={() => setOpen(false)}>
+          <Link href="/privacy" onClick={closeMenu}>
             Privacy
           </Link>
         </div>

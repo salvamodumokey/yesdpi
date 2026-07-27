@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { siteConfig } from "@/lib/config";
+import { SITE_URL, siteConfig } from "@/lib/config";
 
 export interface PageSeo {
   path: string;
@@ -8,7 +8,7 @@ export interface PageSeo {
 }
 
 export function buildMetadata({ path, title, description }: PageSeo): Metadata {
-  const url = `${siteConfig.baseUrl}${path}`;
+  const url = `${SITE_URL}${path}`;
   return {
     title,
     description,
@@ -23,7 +23,7 @@ export function buildMetadata({ path, title, description }: PageSeo): Metadata {
       type: "website",
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title,
       description,
     },
