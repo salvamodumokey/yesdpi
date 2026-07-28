@@ -1,9 +1,10 @@
 /**
  * Centralized site configuration.
  *
- * Every value below that represents real-world identity (domain, contact
- * address, analytics/ad IDs) is a labeled placeholder. Do not invent real
- * values here — replace them when the corresponding account/domain exists.
+ * Values still marked PLACEHOLDER below represent real-world identity
+ * (legal entity, analytics/ad IDs) that doesn't exist yet. Do not invent
+ * real values for those — replace them when the corresponding account
+ * exists.
  */
 
 /**
@@ -19,10 +20,7 @@ export const siteConfig = {
   tagline: "Free DPI & print image tools.",
   promise: "Check, convert, and prepare images for print — privately in your browser.",
 
-  /**
-   * PLACEHOLDER — replace with a real monitored inbox before launch.
-   */
-  contactEmail: "contact@example-placeholder.yesdpi.com",
+  contactEmail: "contact@yesdpi.com",
 
   /**
    * PLACEHOLDER — no legal entity has been formed. Update About/Terms/Privacy
