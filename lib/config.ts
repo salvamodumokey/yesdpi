@@ -9,10 +9,10 @@
 /**
  * The single source of truth for the site's absolute URL. Reads
  * NEXT_PUBLIC_SITE_URL if the hosting environment sets it (e.g. a Vercel
- * project env var), otherwise falls back to the current live deployment.
- * Swap for a custom domain by setting the env var — no code change needed.
+ * project env var), otherwise falls back to the connected production
+ * domain. Swap by setting the env var — no code change needed.
  */
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://yesdpi.vercel.app";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.yesdpi.com";
 
 export const siteConfig = {
   name: "YesDPI",
