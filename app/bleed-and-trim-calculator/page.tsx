@@ -42,6 +42,7 @@ export default function BleedAndTrimCalculatorPage() {
         </p>
       }
       faq={FAQ}
+      relatedGuideSlugs={["amazon-kdp-image-resolution"]}
     >
       <BleedTrimCalculatorForm />
     </ToolPageLayout>

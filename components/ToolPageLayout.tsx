@@ -1,10 +1,12 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { relatedTools } from "@/lib/tools-registry";
+import { getGuides } from "@/lib/guides-registry";
 import { breadcrumbListSchema, faqSchema, softwareApplicationSchema, type FaqItem } from "@/lib/seo/structured-data";
 import AdSlot from "./AdSlot";
 import FaqSection from "./FaqSection";
 import RelatedTools from "./RelatedTools";
+import RelatedGuides from "./RelatedGuides";
 import styles from "./ToolPageLayout.module.css";
 
 const TRUST_ITEMS = ["Your files stay on your device", "No signup required", "No watermark", "Free browser-based tools"];
@@ -19,6 +21,7 @@ export interface ToolPageLayoutProps {
   technicalExplanation: ReactNode;
   faq: FaqItem[];
   trustItems?: string[];
+  relatedGuideSlugs?: string[];
 }
 
 export default function ToolPageLayout({
@@ -31,6 +34,7 @@ export default function ToolPageLayout({
   technicalExplanation,
   faq,
   trustItems = TRUST_ITEMS,
+  relatedGuideSlugs = [],
 }: ToolPageLayoutProps) {
   const jsonLd = [
     softwareApplicationSchema({ path: `/${slug}`, name: h1, description }),
@@ -87,6 +91,8 @@ export default function ToolPageLayout({
       </section>
 
       <RelatedTools tools={relatedTools(slug)} />
+
+      <RelatedGuides guides={getGuides(relatedGuideSlugs)} />
 
       <FaqSection items={faq} />
     </div>

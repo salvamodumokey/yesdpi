@@ -54,6 +54,7 @@ export default function ConvertTo300DpiPage() {
         </>
       }
       faq={FAQ}
+      relatedGuideSlugs={["how-to-convert-image-to-300-dpi", "does-changing-dpi-improve-quality"]}
     >
       <DpiWorkspace mode="to300" />
     </ToolPageLayout>

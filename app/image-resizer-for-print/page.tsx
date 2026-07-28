@@ -42,6 +42,7 @@ export default function ImageResizerForPrintPage() {
         </p>
       }
       faq={FAQ}
+      relatedGuideSlugs={["does-changing-dpi-improve-quality", "8x10-print-size-in-pixels"]}
     >
       <ImageResizerWorkspace />
     </ToolPageLayout>

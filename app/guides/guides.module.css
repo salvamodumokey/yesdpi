@@ -40,11 +40,23 @@
   max-width: 60ch;
 }
 
+.categorySection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  margin-top: var(--space-16);
+}
+
+.categoryHeading {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-16);
-  margin-top: var(--space-8);
 }
 
 @media (max-width: 700px) {

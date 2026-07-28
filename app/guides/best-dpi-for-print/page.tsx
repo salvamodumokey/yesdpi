@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ContentPage from "@/components/ContentPage";
 import RelatedTools from "@/components/RelatedTools";
+import RelatedGuides from "@/components/RelatedGuides";
 import { getTool } from "@/lib/tools-registry";
+import { getGuides } from "@/lib/guides-registry";
 import { buildMetadata } from "@/lib/seo/tool-metadata";
 import { articleSchema, breadcrumbListSchema } from "@/lib/seo/structured-data";
 import contentStyles from "@/components/ContentPage.module.css";
@@ -17,6 +19,7 @@ export const metadata: Metadata = buildMetadata({ path: PATH, title: `${TITLE} |
 const relatedTools = ["print-size-calculator", "poster-size-calculator", "print-size-templates"]
   .map((slug) => getTool(slug))
   .filter((t): t is NonNullable<typeof t> => Boolean(t));
+const relatedGuides = getGuides(["how-to-check-image-dpi", "poster-sizes-in-pixels"]);
 
 const REFERENCE = [
   { useCase: "Professional photo print", dpi: "300 DPI" },
@@ -98,6 +101,7 @@ export default function BestDpiGuide() {
         </p>
 
         <RelatedTools tools={relatedTools} />
+        <RelatedGuides guides={relatedGuides} />
       </ContentPage>
     </>
   );
