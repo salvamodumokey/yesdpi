@@ -34,7 +34,7 @@ export default function PixelsToInchesPage() {
         </p>
       }
       faq={FAQ}
-      relatedGuideSlugs={["a4-size-in-pixels-300-dpi", "8x10-print-size-in-pixels"]}
+      relatedGuideSlugs={["photo-print-sizes-in-pixels", "a4-size-in-pixels-300-dpi", "8x10-print-size-in-pixels"]}
     >
       <UnitConverterForm
         conversion="pixelsToInches"

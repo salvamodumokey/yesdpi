@@ -32,7 +32,7 @@ export default function PosterSizeCalculatorPage() {
         </p>
       }
       faq={FAQ}
-      relatedGuideSlugs={["poster-sizes-in-pixels", "a4-size-in-pixels-300-dpi"]}
+      relatedGuideSlugs={["poster-sizes-in-pixels", "photo-print-sizes-in-pixels", "a4-size-in-pixels-300-dpi"]}
     >
       <PosterSizeCalculatorForm />
     </ToolPageLayout>

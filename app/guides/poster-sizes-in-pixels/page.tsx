@@ -23,7 +23,7 @@ export const metadata: Metadata = buildMetadata({ path: PATH, title: `${TITLE} |
 const relatedTools = ["poster-size-calculator", "print-size-calculator", "image-resizer-for-print", "pixels-to-inches"]
   .map((slug) => getTool(slug))
   .filter((t): t is NonNullable<typeof t> => Boolean(t));
-const relatedGuides = getGuides(["a4-size-in-pixels-300-dpi", "8x10-print-size-in-pixels"]);
+const relatedGuides = getGuides(["photo-print-sizes-in-pixels", "a4-size-in-pixels-300-dpi", "8x10-print-size-in-pixels"]);
 
 interface SizeSpec {
   label: string;

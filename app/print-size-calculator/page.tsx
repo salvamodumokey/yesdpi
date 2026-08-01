@@ -41,7 +41,7 @@ export default function PrintSizeCalculatorPage() {
         </p>
       }
       faq={FAQ}
-      relatedGuideSlugs={["a4-size-in-pixels-300-dpi", "8x10-print-size-in-pixels", "poster-sizes-in-pixels"]}
+      relatedGuideSlugs={["photo-print-sizes-in-pixels", "a4-size-in-pixels-300-dpi", "8x10-print-size-in-pixels", "poster-sizes-in-pixels"]}
     >
       <PrintSizeCalculatorForm />
     </ToolPageLayout>

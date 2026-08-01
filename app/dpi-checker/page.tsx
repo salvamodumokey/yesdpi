@@ -57,7 +57,7 @@ export default function DpiCheckerPage() {
         </>
       }
       faq={FAQ}
-      relatedGuideSlugs={["how-to-check-image-dpi", "72-vs-300-dpi", "best-dpi-for-print"]}
+      relatedGuideSlugs={["how-to-check-image-dpi", "how-to-check-image-dpi-on-devices", "72-vs-300-dpi", "best-dpi-for-print"]}
     >
       <DpiWorkspace mode="check" />
     </ToolPageLayout>

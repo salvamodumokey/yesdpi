@@ -26,6 +26,13 @@ export const guides: GuideDefinition[] = [
     category: "DPI Fundamentals",
   },
   {
+    slug: "how-to-check-image-dpi-on-devices",
+    href: "/guides/how-to-check-image-dpi-on-devices",
+    title: "How to Check Image DPI on Windows, Mac, iPhone and Android",
+    description: "Device-by-device steps for finding an image's DPI and resolution, plus a reliable browser-based alternative.",
+    category: "DPI Fundamentals",
+  },
+  {
     slug: "72-vs-300-dpi",
     href: "/guides/72-vs-300-dpi",
     title: "72 DPI vs. 300 DPI",
@@ -72,6 +79,13 @@ export const guides: GuideDefinition[] = [
     href: "/guides/poster-sizes-in-pixels",
     title: "Poster Sizes in Pixels at 300 DPI",
     description: "Pixel dimensions for every standard poster size, from 8×10 to 24×36 and A-series.",
+    category: "Print Sizes",
+  },
+  {
+    slug: "photo-print-sizes-in-pixels",
+    href: "/guides/photo-print-sizes-in-pixels",
+    title: "Photo Print Sizes in Pixels: Complete 300 DPI Chart",
+    description: "The exact pixel dimensions every standard photo and poster print size needs, from 4×6 to 24×36.",
     category: "Print Sizes",
   },
   {
