@@ -20,3 +20,22 @@
 .link {
   flex-shrink: 0;
 }
+
+/*
+ * Specificity fix: ContentPage's `.body a { color: var(--accent) }` (0,1,1)
+ * otherwise outranks buttons.module.css's `.primary` (0,1,0) and repaints
+ * this button's label the same blue as its background. `.box .link` (0,2,0)
+ * wins without touching the global anchor style or buttons.module.css.
+ */
+.box .link,
+.box .link:link,
+.box .link:visited,
+.box .link:hover,
+.box .link:focus-visible {
+  color: #ffffff;
+}
+
+.box .link:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
