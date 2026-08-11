@@ -6,6 +6,7 @@ import RelatedGuides from "@/components/RelatedGuides";
 import GuideCta from "@/components/GuideCta";
 import FaqSection from "@/components/FaqSection";
 import DataTable from "@/components/DataTable";
+import PosterSizeCalculatorForm from "@/components/tools/PosterSizeCalculatorForm";
 import { getTool } from "@/lib/tools-registry";
 import { getGuides } from "@/lib/guides-registry";
 import { buildMetadata } from "@/lib/seo/tool-metadata";
@@ -16,68 +17,69 @@ import contentStyles from "@/components/ContentPage.module.css";
 const PATH = "/guides/poster-sizes-in-pixels";
 const TITLE = "Poster Sizes in Pixels at 300 DPI";
 const DESCRIPTION =
-  "Pixel dimensions at 150 and 300 DPI for every standard poster size, from 8×10in up to 24×36in, plus A4, A3, A2, and A1.";
+  "Poster pixel dimensions at 100, 150, 200, and 300 DPI for standard sizes from 8×10 to 24×36, plus A-series posters and a live size calculator.";
 
 export const metadata: Metadata = buildMetadata({ path: PATH, title: `${TITLE} | YesDPI`, description: DESCRIPTION });
 
-const relatedTools = ["poster-size-calculator", "print-size-calculator", "image-resizer-for-print", "pixels-to-inches"]
+const relatedTools = ["poster-size-calculator", "print-size-calculator", "image-resizer-for-print", "dpi-checker"]
   .map((slug) => getTool(slug))
   .filter((t): t is NonNullable<typeof t> => Boolean(t));
-const relatedGuides = getGuides(["photo-print-sizes-in-pixels", "a4-size-in-pixels-300-dpi", "8x10-print-size-in-pixels"]);
+const relatedGuides = getGuides(["72-vs-300-dpi", "photo-print-sizes-in-pixels", "a4-size-in-pixels-300-dpi"]);
 
 interface SizeSpec {
   label: string;
-  dims: { widthPx: number; heightPx: number };
-  dimsAt150: { widthPx: number; heightPx: number };
+  widthIn: number;
+  heightIn: number;
 }
 
-function inSize(label: string, widthIn: number, heightIn: number): SizeSpec {
-  return { label, dims: pxDimsFromInches(widthIn, heightIn, 300), dimsAt150: pxDimsFromInches(widthIn, heightIn, 150) };
-}
-function mmSize(label: string, widthMm: number, heightMm: number): SizeSpec {
-  return { label, dims: pxDimsFromMm(widthMm, heightMm, 300), dimsAt150: pxDimsFromMm(widthMm, heightMm, 150) };
-}
-
-const SIZES: SizeSpec[] = [
-  inSize("8 × 10 in", 8, 10),
-  inSize("11 × 17 in", 11, 17),
-  inSize("12 × 18 in", 12, 18),
-  inSize("16 × 20 in", 16, 20),
-  inSize("18 × 24 in", 18, 24),
-  inSize("20 × 30 in", 20, 30),
-  inSize("24 × 36 in", 24, 36),
-  mmSize("A4 (210 × 297 mm)", 210, 297),
-  mmSize("A3 (297 × 420 mm)", 297, 420),
-  mmSize("A2 (420 × 594 mm)", 420, 594),
-  mmSize("A1 (594 × 841 mm)", 594, 841),
+const INCH_SIZES: SizeSpec[] = [
+  { label: "8 × 10 in", widthIn: 8, heightIn: 10 },
+  { label: "11 × 17 in", widthIn: 11, heightIn: 17 },
+  { label: "12 × 18 in", widthIn: 12, heightIn: 18 },
+  { label: "16 × 20 in", widthIn: 16, heightIn: 20 },
+  { label: "18 × 24 in", widthIn: 18, heightIn: 24 },
+  { label: "20 × 30 in", widthIn: 20, heightIn: 30 },
+  { label: "24 × 36 in", widthIn: 24, heightIn: 36 },
+  { label: "27 × 40 in", widthIn: 27, heightIn: 40 },
 ];
 
-const size24x36 = SIZES.find((s) => s.label === "24 × 36 in")!;
+const A_SERIES = [
+  { label: "A4", widthMm: 210, heightMm: 297 },
+  { label: "A3", widthMm: 297, heightMm: 420 },
+  { label: "A2", widthMm: 420, heightMm: 594 },
+  { label: "A1", widthMm: 594, heightMm: 841 },
+  { label: "A0", widthMm: 841, heightMm: 1189 },
+];
+
+function pixelPair(widthIn: number, heightIn: number, dpi: number): string {
+  const dims = pxDimsFromInches(widthIn, heightIn, dpi);
+  return `${formatPx(dims.widthPx)} × ${formatPx(dims.heightPx)}`;
+}
 
 const FAQ = [
   {
     question: "What size in pixels is a 24x36 poster at 300 DPI?",
-    answer: `A 24×36in poster is ${formatPx(size24x36.dims.widthPx)} × ${formatPx(size24x36.dims.heightPx)} pixels at 300 DPI, or ${formatPx(size24x36.dimsAt150.widthPx)} × ${formatPx(size24x36.dimsAt150.heightPx)} pixels at 150 DPI.`,
+    answer: "A 24×36 inch poster is 7,200 × 10,800 pixels at 300 DPI, 4,800 × 7,200 pixels at 200 DPI, and 3,600 × 5,400 pixels at 150 DPI.",
   },
   {
     question: "Do posters really need 300 DPI?",
     answer:
-      "Usually not. Posters are typically viewed from several feet away, where the eye can't resolve 300 DPI detail — 150 DPI, or sometimes less, is standard for large-format prints. See Best DPI for Common Print Formats for viewing-distance guidance.",
+      "Usually not. Many posters are viewed from several feet away, so 150–200 DPI can be a practical target. Smaller posters inspected closely can benefit from 300 DPI, while very large signage may use less.",
   },
   {
-    question: "Why do larger poster sizes need proportionally more pixels?",
+    question: "What DPI should I use for an 18x24 poster?",
     answer:
-      "Pixel count scales directly with physical size at a fixed DPI — doubling the print dimensions doubles the pixels needed on each axis, and quadruples the total pixel count. That's why a 24×36in poster at 300 DPI needs far more source resolution than an 8×10in print at the same DPI.",
+      "150–200 DPI is a practical range for many 18×24 posters. That means roughly 2,700 × 3,600 pixels at 150 DPI or 3,600 × 4,800 pixels at 200 DPI. Use 300 DPI when close viewing or a print provider requires it.",
   },
   {
-    question: "My source image doesn't have enough pixels for a large poster at 300 DPI — what are my options?",
+    question: "Can I print a poster if my image has fewer pixels than the table?",
     answer:
-      "Print at 150 DPI instead, since posters are viewed from a distance and rarely need 300 DPI; print smaller; or start from a higher-resolution source if one exists. Upscaling can fill the pixel count but doesn't recover missing detail.",
+      "Yes, but the effective DPI will be lower. Whether that is acceptable depends on poster size, viewing distance, source sharpness, and the print process. Avoid assuming that changing only the DPI metadata will add missing detail.",
   },
   {
-    question: "Are A-series poster sizes (A3, A2, A1) common outside Europe?",
+    question: "Are A-series poster sizes common outside Europe?",
     answer:
-      "A-series sizes are the ISO 216 standard used across most of the world for posters and prints. US-centric sizes like 11×17in and 24×36in are more common in North America; check what your print shop or framer stocks before choosing.",
+      "A-series sizes are the ISO 216 standard used across much of the world. North American print shops also commonly offer inch-based sizes such as 11×17, 18×24, and 24×36 inches.",
   },
 ];
 
@@ -107,52 +109,82 @@ export default function PosterSizesInPixelsGuide() {
         }
       >
         <p>
-          Poster pixel requirements scale directly with print size and DPI. A 24×36in poster needs{" "}
-          {formatPx(size24x36.dims.widthPx)} × {formatPx(size24x36.dims.heightPx)} pixels at 300 DPI, but only{" "}
-          {formatPx(size24x36.dimsAt150.widthPx)} × {formatPx(size24x36.dimsAt150.heightPx)} pixels at the more
-          typical poster target of 150 DPI. The full table below covers every standard size at both.
+          A poster&apos;s required pixel dimensions depend on both its physical size and the resolution you intend to
+          print at. A 24×36 inch poster needs <strong>7,200 × 10,800 px at 300 DPI</strong>, but only{" "}
+          <strong>3,600 × 5,400 px at 150 DPI</strong>. For many wall posters, 150–200 DPI is a more realistic target
+          than 300 DPI because the print is viewed from farther away.
         </p>
 
-        <GuideCta text="Check standard poster dimensions and required resolution." href="/poster-size-calculator" label="Open Poster Size Calculator" />
+        <h2>Calculate a standard poster size</h2>
+        <p>
+          Pick a poster preset and change the DPI to see the exact pixel requirement. This is the same print math used
+          throughout YesDPI, shown directly on the guide so you do not need to copy values into a separate calculator.
+        </p>
+        <PosterSizeCalculatorForm />
 
-        <h2>Poster sizes at 150 and 300 DPI</h2>
+        <h2>Standard poster sizes in pixels</h2>
         <DataTable
-          headers={["Poster size", "150 DPI (px)", "300 DPI (px)"]}
-          rows={SIZES.map((s) => [
+          headers={["Poster size", "100 DPI", "150 DPI", "200 DPI", "300 DPI"]}
+          rows={INCH_SIZES.map((s) => [
             s.label,
-            `${formatPx(s.dimsAt150.widthPx)} × ${formatPx(s.dimsAt150.heightPx)}`,
-            `${formatPx(s.dims.widthPx)} × ${formatPx(s.dims.heightPx)}`,
+            pixelPair(s.widthIn, s.heightIn, 100),
+            pixelPair(s.widthIn, s.heightIn, 150),
+            pixelPair(s.widthIn, s.heightIn, 200),
+            pixelPair(s.widthIn, s.heightIn, 300),
           ])}
         />
 
-        <h2>Why 150 DPI is usually the right target for posters</h2>
+        <h2>A-series poster sizes in pixels</h2>
+        <DataTable
+          headers={["ISO size", "Physical size", "150 DPI", "300 DPI"]}
+          rows={A_SERIES.map((s) => {
+            const at150 = pxDimsFromMm(s.widthMm, s.heightMm, 150);
+            const at300 = pxDimsFromMm(s.widthMm, s.heightMm, 300);
+            return [
+              s.label,
+              `${s.widthMm} × ${s.heightMm} mm`,
+              `${formatPx(at150.widthPx)} × ${formatPx(at150.heightPx)}`,
+              `${formatPx(at300.widthPx)} × ${formatPx(at300.heightPx)}`,
+            ];
+          })}
+        />
+
+        <h2>Which DPI should you choose for a poster?</h2>
+        <DataTable
+          headers={["Typical situation", "Practical starting point", "What it means"]}
+          rows={[
+            ["Small poster viewed closely", "240–300 DPI", "More source pixels, strongest close-up detail"],
+            ["General wall poster", "150–200 DPI", "Good balance of detail and manageable pixel requirements"],
+            ["Large poster viewed from farther away", "100–150 DPI", "Lower density can still appear sharp at distance"],
+            ["Very large signage / banner", "Often below 150 DPI", "Follow the print provider's specification"],
+          ]}
+        />
         <p>
-          DPI requirements exist to match print density to how closely a viewer will look. A photo held 12 inches
-          away benefits from 300 DPI; a poster mounted on a wall is typically viewed from several feet back, where
-          the eye simply can&apos;t resolve that same density. Printing at 300 DPI for a large poster mostly just
-          demands more source resolution without a visible sharpness benefit — 150 DPI (or less, for very large or
-          distant pieces like banners) is the standard practical target.
+          DPI targets are not a substitute for checking your actual file. A sharp, well-focused image at 180 effective
+          DPI can outperform a soft or heavily compressed image that merely contains a 300-DPI metadata tag. For a
+          deeper comparison, see <Link href="/guides/72-vs-300-dpi">72 vs. 150 vs. 300 DPI</Link>.
         </p>
 
-        <h2>How the numbers scale</h2>
-        <p>
-          Pixel dimensions follow directly from the same formula at every size: <code>pixels = inches × DPI</code>.
-          A 12×18in print at 300 DPI needs 3,600×5,400px; a 24×36in poster — exactly double the width and height —
-          needs exactly double the pixels on each axis, or 7,200×10,800px, and four times the total pixel count.
-          That&apos;s the practical reason large-format prints usually drop to a lower DPI target instead of scaling
-          resolution requirements linearly with size.
-        </p>
-
-        <h2>Checking what your source image supports</h2>
+        <h2>Check whether your image can support the poster size</h2>
         <ol>
-          <li>Check your image&apos;s pixel dimensions with the <Link href="/dpi-checker">DPI Checker</Link>.</li>
-          <li>Find your target poster size in the table above and compare against both the 150 and 300 DPI columns.</li>
+          <li>Inspect the image&apos;s real width and height in pixels with the <Link href="/dpi-checker">DPI Checker</Link>.</li>
+          <li>Choose a poster size and a realistic target DPI from the tables above.</li>
+          <li>Compare your image pixels with the required dimensions on both axes.</li>
           <li>
-            If your pixels land between the two, use the exact figure with the{" "}
-            <Link href="/print-size-calculator">Print Size Calculator</Link> to see the DPI you&apos;ll actually get.
+            If your image falls between two targets, use the{" "}
+            <Link href="/print-size-calculator">Print Size Calculator</Link> to calculate its exact effective DPI.
           </li>
-          <li>Resize to your chosen target with the <Link href="/image-resizer-for-print">Image Resizer for Print</Link>.</li>
+          <li>
+            If the source already has enough detail, resize it to the production dimensions with the{" "}
+            <Link href="/image-resizer-for-print">Image Resizer for Print</Link>.
+          </li>
         </ol>
+
+        <GuideCta
+          text="Want the calculator on its own page with the full poster preset workflow?"
+          href="/poster-size-calculator"
+          label="Open Poster Size Calculator"
+        />
 
         <RelatedTools tools={relatedTools} />
         <RelatedGuides guides={relatedGuides} />
