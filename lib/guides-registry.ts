@@ -57,7 +57,7 @@ export const guides: GuideDefinition[] = [
     slug: "a4-size-in-pixels-300-dpi",
     href: "/guides/a4-size-in-pixels-300-dpi",
     title: "A4 Size in Pixels at 300 DPI",
-    description: "Exact A4 pixel dimensions at 300 DPI, plus a comparison across common PPI values.",
+    description: "Calculate A4 pixel dimensions at any DPI and compare portrait and landscape values.",
     category: "Print Sizes",
   },
   {
@@ -71,14 +71,14 @@ export const guides: GuideDefinition[] = [
     slug: "poster-sizes-in-pixels",
     href: "/guides/poster-sizes-in-pixels",
     title: "Poster Sizes in Pixels at 300 DPI",
-    description: "Pixel dimensions for every standard poster size, from 8×10 to 24×36 and A-series.",
+    description: "Compare standard and A-series poster dimensions at 100, 150, 200, and 300 DPI with a live calculator.",
     category: "Print Sizes",
   },
   {
     slug: "photo-print-sizes-in-pixels",
     href: "/guides/photo-print-sizes-in-pixels",
     title: "Photo Print Sizes in Pixels: Complete 300 DPI Chart",
-    description: "The exact pixel dimensions every standard photo and poster print size needs, from 4×6 to 24×36.",
+    description: "Pixel dimensions, aspect ratios, and crop guidance for common photo print sizes from 4×6 to 16×20.",
     category: "Print Sizes",
   },
   {
