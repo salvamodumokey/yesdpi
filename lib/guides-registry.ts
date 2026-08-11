@@ -35,8 +35,8 @@ export const guides: GuideDefinition[] = [
   {
     slug: "72-vs-300-dpi",
     href: "/guides/72-vs-300-dpi",
-    title: "72 DPI vs. 300 DPI",
-    description: "Where these two numbers came from, and when each one actually applies.",
+    title: "72 vs. 150 vs. 300 DPI: Best Resolution for Print",
+    description: "Choose a practical DPI for photos, documents, posters, canvas, banners, and screen-only images.",
     category: "DPI Fundamentals",
   },
   {
@@ -51,13 +51,6 @@ export const guides: GuideDefinition[] = [
     href: "/guides/how-to-convert-image-to-300-dpi",
     title: "How to Convert an Image to 300 DPI",
     description: "Set an image's DPI metadata to 300 for print shops, labs, and submission forms.",
-    category: "Image Resolution",
-  },
-  {
-    slug: "best-dpi-for-print",
-    href: "/guides/best-dpi-for-print",
-    title: "Best DPI for Common Print Formats",
-    description: "A practical DPI target for photos, posters, and documents.",
     category: "Image Resolution",
   },
   {
