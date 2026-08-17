@@ -182,11 +182,43 @@ export const POPULAR_TOOL_BENEFIT: Record<string, string> = {
   "image-resizer-for-print": "Resize to an exact print size, ready to send.",
 };
 
+/**
+ * Intent-based relationships used across tool pages.
+ * These are deliberately explicit instead of relying only on registry order:
+ * each set should continue the user's current print workflow.
+ */
+const RELATED_TOOL_SLUGS: Record<string, string[]> = {
+  "dpi-checker": ["print-size-calculator", "image-resizer-for-print", "convert-image-to-300-dpi"],
+  "dpi-converter": ["dpi-checker", "convert-image-to-300-dpi", "image-metadata-viewer"],
+  "convert-image-to-300-dpi": ["dpi-checker", "print-size-calculator", "image-resizer-for-print"],
+  "print-size-calculator": ["dpi-checker", "image-resizer-for-print", "pixels-to-inches"],
+  "pixels-to-inches": ["print-size-calculator", "inches-to-pixels", "dpi-checker"],
+  "pixels-to-cm": ["print-size-calculator", "cm-to-pixels", "dpi-checker"],
+  "inches-to-pixels": ["print-size-calculator", "pixels-to-inches", "image-resizer-for-print"],
+  "cm-to-pixels": ["print-size-calculator", "pixels-to-cm", "image-resizer-for-print"],
+  "aspect-ratio-calculator": ["image-resizer-for-print", "print-size-calculator", "poster-size-calculator"],
+  "image-resizer-for-print": ["print-size-calculator", "dpi-checker", "image-format-converter"],
+  "image-compressor": ["image-resizer-for-print", "image-format-converter", "dpi-checker"],
+  "image-format-converter": ["image-resizer-for-print", "image-compressor", "dpi-checker"],
+  "image-metadata-viewer": ["dpi-checker", "dpi-converter", "image-format-converter"],
+  "bleed-and-trim-calculator": ["poster-size-calculator", "print-size-calculator", "image-resizer-for-print"],
+  "poster-size-calculator": ["print-size-calculator", "bleed-and-trim-calculator", "image-resizer-for-print"],
+  "passport-photo-size-calculator": ["image-resizer-for-print", "dpi-checker", "print-size-calculator"],
+  "frame-and-mat-calculator": ["print-size-calculator", "aspect-ratio-calculator", "image-resizer-for-print"],
+  "print-size-templates": ["print-size-calculator", "image-resizer-for-print", "dpi-checker"],
+};
+
 export function getTool(slug: string): ToolDefinition | undefined {
   return tools.find((t) => t.slug === slug);
 }
 
 export function relatedTools(slug: string, count = 3): ToolDefinition[] {
+  const explicit = RELATED_TOOL_SLUGS[slug]
+    ?.map((relatedSlug) => getTool(relatedSlug))
+    .filter((tool): tool is ToolDefinition => Boolean(tool && tool.status === "available"));
+
+  if (explicit && explicit.length > 0) return explicit.slice(0, count);
+
   const current = getTool(slug);
   const pool = tools.filter((t) => t.slug !== slug && t.status === "available");
   if (!current) return pool.slice(0, count);
