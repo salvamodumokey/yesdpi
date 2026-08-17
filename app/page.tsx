@@ -4,6 +4,7 @@ import ToolGrid from "@/components/ToolGrid";
 import AdSlot from "@/components/AdSlot";
 import FaqSection from "@/components/FaqSection";
 import GuideCard from "@/components/GuideCard";
+import TopicPaths from "@/components/TopicPaths";
 import HeroDropzone from "@/components/tools/HeroDropzone";
 import { CheckIcon } from "@/components/icons";
 import { CATEGORY_LABEL, tools, popularToolSlugs } from "@/lib/tools-registry";
@@ -107,6 +108,8 @@ export default function Home() {
       </section>
 
       <main className={styles.main}>
+        <TopicPaths />
+
         <section id="popular-tools" className={styles.section} aria-label="Popular tools">
           <div className={styles.sectionHeading}>
             <h2>Popular Tools</h2>
