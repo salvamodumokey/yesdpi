@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import ToolPageLayout from "@/components/ToolPageLayout";
+import DataTable from "@/components/DataTable";
 import DpiWorkspace from "@/components/tools/DpiWorkspace";
 import { buildMetadata } from "@/lib/seo/tool-metadata";
 
@@ -30,6 +32,25 @@ const FAQ = [
     answer:
       "Pixel dimensions are the actual grid of pixels an image contains. Image files may also store a resolution value commonly labeled DPI, which software uses to work out the intended print size — while the pixel dimensions are what determine how much detail is actually available. Changing the DPI value does not add or remove pixels.",
   },
+  {
+    question: "What should I do after checking DPI?",
+    answer:
+      "Use the pixel dimensions and intended print size to calculate effective print resolution. If the image has enough pixels, resize or convert metadata only as needed for the print workflow.",
+  },
+];
+
+const DPI_RESULT_GUIDE = [
+  ["DPI is set and pixels are large enough", "The file may already be ready for the target print size"],
+  ["DPI is set but pixels are too small", "Changing the DPI label will not fix softness; use a smaller print or higher-resolution source"],
+  ["DPI is not set", "Use pixel dimensions and target print size to calculate effective DPI"],
+  ["Pixels are large but DPI is wrong", "Update metadata with the DPI Converter or 300 DPI Converter if a provider requires it"],
+];
+
+const COMMON_NEXT_STEPS = [
+  ["Need physical print size?", "Use the Print Size Calculator", "/print-size-calculator"],
+  ["Need exact print pixels?", "Use the Image Resizer for Print", "/image-resizer-for-print"],
+  ["Need a 300 DPI label?", "Use Convert Image to 300 DPI", "/convert-image-to-300-dpi"],
+  ["Need device-specific steps?", "Read how to check DPI on any device", "/guides/how-to-check-image-dpi-on-devices"],
 ];
 
 export default function DpiCheckerPage() {
@@ -57,9 +78,25 @@ export default function DpiCheckerPage() {
         </>
       }
       faq={FAQ}
-      relatedGuideSlugs={["how-to-check-image-dpi", "how-to-check-image-dpi-on-devices", "72-vs-300-dpi", "best-dpi-for-print"]}
+      relatedGuideSlugs={["how-to-check-image-dpi", "how-to-check-image-dpi-on-devices", "72-vs-300-dpi", "dpi-vs-ppi"]}
     >
       <DpiWorkspace mode="check" />
+
+      <h2>How to read the DPI Checker result</h2>
+      <p>
+        The important part is the combination of embedded DPI and real pixel dimensions. A file can have a 300-DPI
+        label and still be too small for a large print, or have no DPI metadata but plenty of pixels for printing.
+      </p>
+      <DataTable
+        headers={["Result", "What it means"]}
+        rows={DPI_RESULT_GUIDE}
+      />
+
+      <h2>What to do next</h2>
+      <DataTable
+        headers={["Goal", "Next step"]}
+        rows={COMMON_NEXT_STEPS.map(([goal, label, href]) => [goal, <Link key={href} href={href}>{label}</Link>])}
+      />
     </ToolPageLayout>
   );
 }

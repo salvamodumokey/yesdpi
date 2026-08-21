@@ -1,8 +1,9 @@
+import type { ReactNode } from "react";
 import styles from "./DataTable.module.css";
 
 interface DataTableProps {
   headers: string[];
-  rows: (string | number)[][];
+  rows: ReactNode[][];
 }
 
 export default function DataTable({ headers, rows }: DataTableProps) {

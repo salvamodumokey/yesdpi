@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/:path*",
+        has: [{ type: "host", value: "yesdpi.com" }],
+        destination: "https://www.yesdpi.com/:path*",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
         has: [{ type: "host", value: "yesdpi.vercel.app" }],
         destination: "https://www.yesdpi.com/:path*",
         permanent: true,

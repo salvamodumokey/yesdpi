@@ -24,7 +24,7 @@ export const metadata: Metadata = buildMetadata({ path: PATH, title: `${TITLE} |
 const relatedTools = ["print-size-calculator", "image-resizer-for-print", "dpi-checker", "pixels-to-inches"]
   .map((slug) => getTool(slug))
   .filter((t): t is NonNullable<typeof t> => Boolean(t));
-const relatedGuides = getGuides(["72-vs-300-dpi", "8x10-print-size-in-pixels", "poster-sizes-in-pixels"]);
+const relatedGuides = getGuides(["72-vs-300-dpi", "photo-print-sizes-in-pixels", "8x10-print-size-in-pixels", "poster-sizes-in-pixels"]);
 
 const A4_WIDTH_MM = 210;
 const A4_HEIGHT_MM = 297;

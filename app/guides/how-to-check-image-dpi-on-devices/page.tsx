@@ -19,7 +19,7 @@ const DESCRIPTION =
 export const metadata: Metadata = buildMetadata({ path: PATH, title: `${TITLE} | YesDPI`, description: DESCRIPTION });
 
 const relatedTools = ["dpi-checker", "print-size-calculator"].map((slug) => getTool(slug)).filter((t): t is NonNullable<typeof t> => Boolean(t));
-const relatedGuides = getGuides(["how-to-check-image-dpi", "dpi-vs-ppi", "best-dpi-for-print"]);
+const relatedGuides = getGuides(["how-to-check-image-dpi", "dpi-vs-ppi", "72-vs-300-dpi"]);
 
 const FAQ = [
   {

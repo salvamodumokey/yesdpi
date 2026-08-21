@@ -85,7 +85,7 @@ export default function ImageResizerForPrintPage() {
         </>
       }
       faq={FAQ}
-      relatedGuideSlugs={["photo-print-sizes-in-pixels", "poster-sizes-in-pixels", "does-changing-dpi-improve-quality", "8x10-print-size-in-pixels"]}
+      relatedGuideSlugs={["photo-print-sizes-in-pixels", "a4-size-in-pixels-300-dpi", "poster-sizes-in-pixels", "does-changing-dpi-improve-quality", "8x10-print-size-in-pixels"]}
     >
       <ImageResizerWorkspace />
 

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import ToolPageLayout from "@/components/ToolPageLayout";
+import DataTable from "@/components/DataTable";
 import DpiWorkspace from "@/components/tools/DpiWorkspace";
 import { buildMetadata } from "@/lib/seo/tool-metadata";
 
@@ -26,6 +28,31 @@ const FAQ = [
     answer:
       "JPG and PNG files keep their format. WebP files are converted to PNG, since WebP has no widely supported editable DPI field — your pixels are copied over unchanged.",
   },
+  {
+    question: "Should I convert to 300 DPI before checking pixel dimensions?",
+    answer:
+      "Check the pixel dimensions first. A 300-DPI label is only useful when the image also has enough pixels for the physical print size you want.",
+  },
+  {
+    question: "Is this the same as resizing to 300 DPI?",
+    answer:
+      "No. This converter updates DPI metadata while preserving the pixel grid. Resizing for print changes the actual pixel dimensions to match a chosen physical size and DPI.",
+  },
+];
+
+const READINESS_CHECKS = [
+  ["4 × 6 in photo", "1,200 × 1,800 px", "300 DPI is realistic for a normal photo print"],
+  ["8 × 10 in photo", "2,400 × 3,000 px", "Check crop ratio as well as pixels"],
+  ["A4 page", "2,480 × 3,508 px", "Good target for close-viewed documents or artwork"],
+  ["12 × 18 in print", "3,600 × 5,400 px", "Large photo print at full 300 DPI"],
+  ["24 × 36 in poster", "7,200 × 10,800 px", "Often overkill; 150–200 DPI may be enough"],
+];
+
+const WHEN_TO_USE = [
+  ["Use this converter", "A print shop, marketplace, or upload form specifically asks for 300 DPI metadata"],
+  ["Use the DPI Checker first", "You do not know the image's current pixels or embedded DPI value"],
+  ["Use the Print Size Calculator", "You need to know how large the current image can print sharply"],
+  ["Use the Image Resizer for Print", "You need exact final pixel dimensions for a chosen print size"],
 ];
 
 export default function ConvertTo300DpiPage() {
@@ -57,6 +84,27 @@ export default function ConvertTo300DpiPage() {
       relatedGuideSlugs={["how-to-convert-image-to-300-dpi", "does-changing-dpi-improve-quality"]}
     >
       <DpiWorkspace mode="to300" />
+
+      <h2>Check whether 300 DPI is enough for your print size</h2>
+      <p>
+        Converting to 300 DPI does not add detail. Compare your image&apos;s real pixel dimensions with the target
+        below before assuming the file is print-ready.
+      </p>
+      <DataTable
+        headers={["Print target", "Pixels needed at 300 DPI", "What to check"]}
+        rows={READINESS_CHECKS}
+      />
+
+      <h2>When to change DPI metadata vs. resize the image</h2>
+      <DataTable
+        headers={["Action", "Use it when"]}
+        rows={WHEN_TO_USE}
+      />
+      <p>
+        A good workflow is: inspect the file with the <Link href="/dpi-checker">DPI Checker</Link>, calculate the
+        usable print size with the <Link href="/print-size-calculator">Print Size Calculator</Link>, then convert to
+        300 DPI only when the pixel dimensions support the print you want.
+      </p>
     </ToolPageLayout>
   );
 }

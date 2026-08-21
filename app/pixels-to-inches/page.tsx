@@ -69,7 +69,7 @@ export default function PixelsToInchesPage() {
         </>
       }
       faq={FAQ}
-      relatedGuideSlugs={["photo-print-sizes-in-pixels", "poster-sizes-in-pixels", "8x10-print-size-in-pixels", "72-vs-300-dpi"]}
+      relatedGuideSlugs={["photo-print-sizes-in-pixels", "a4-size-in-pixels-300-dpi", "poster-sizes-in-pixels", "8x10-print-size-in-pixels", "72-vs-300-dpi"]}
     >
       <UnitConverterForm
         conversion="pixelsToInches"
