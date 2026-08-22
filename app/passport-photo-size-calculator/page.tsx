@@ -71,7 +71,7 @@ export default function PassportPhotoSizeCalculatorPage() {
       <h2>Common passport photo pixel sizes at 300 DPI</h2>
       <p>
         These examples are rounded to whole pixels. They are useful for preparing a print file, but the official
-        authority's current size, background, head position, and crop rules still matter.
+        authority&apos;s current size, background, head position, and crop rules still matter.
       </p>
       <DataTable headers={["Physical photo size", "Pixels at 300 DPI", "Typical use"]} rows={COMMON_REQUIREMENTS} />
 
