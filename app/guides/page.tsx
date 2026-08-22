@@ -38,6 +38,33 @@ const START_HERE = [
   },
 ];
 
+const WORKFLOWS = [
+  {
+    title: "Check an existing image",
+    steps: [
+      { label: "Read the file", href: "/guides/how-to-check-image-dpi" },
+      { label: "Understand the result", href: "/guides/dpi-vs-ppi" },
+      { label: "Decide if 300 DPI matters", href: "/guides/72-vs-300-dpi" },
+    ],
+  },
+  {
+    title: "Prepare a photo for print",
+    steps: [
+      { label: "Pick the final print size", href: "/guides/photo-print-sizes-in-pixels" },
+      { label: "Check the required pixels", href: "/print-size-calculator" },
+      { label: "Resize or update DPI", href: "/image-resizer-for-print" },
+    ],
+  },
+  {
+    title: "Create a document or poster",
+    steps: [
+      { label: "Use A4 pixel dimensions", href: "/guides/a4-size-in-pixels-300-dpi" },
+      { label: "Compare poster sizes", href: "/guides/poster-sizes-in-pixels" },
+      { label: "Convert inches to pixels", href: "/inches-to-pixels" },
+    ],
+  },
+];
+
 export default function GuidesIndexPage() {
   return (
     <div className={styles.page}>
@@ -58,6 +85,30 @@ export default function GuidesIndexPage() {
               <h3>{item.title}</h3>
               <p>{item.description}</p>
               <Link href={item.href}>{item.label} →</Link>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className={styles.workflowSection} aria-labelledby="workflow-heading">
+        <div className={styles.startHeading}>
+          <h2 id="workflow-heading">Use the guides as a print workflow</h2>
+          <p>
+            YesDPI guides are grouped around real print decisions: checking an existing file, choosing a physical size,
+            and preparing enough pixels for the final output.
+          </p>
+        </div>
+        <div className={styles.workflowGrid}>
+          {WORKFLOWS.map((workflow) => (
+            <article key={workflow.title} className={styles.workflowCard}>
+              <h3>{workflow.title}</h3>
+              <ol>
+                {workflow.steps.map((step) => (
+                  <li key={step.href}>
+                    <Link href={step.href}>{step.label}</Link>
+                  </li>
+                ))}
+              </ol>
             </article>
           ))}
         </div>
